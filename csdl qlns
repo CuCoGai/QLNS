@@ -1,0 +1,137 @@
+use Quanlinhansu
+go
+create table nguoidung(
+ID int primary key not null,
+ten nvarchar(50),
+email nvarchar(100),
+password nvarchar(50)
+)
+
+create table nhom(
+ma varchar(10) primary key not null,
+ten nvarchar(50)
+)
+create table capbac(
+ma varchar(10) primary key not null,
+ten nvarchar(50)
+)
+drop table capbac
+create table hocvan(
+ma varchar(10) primary key not null,
+ten nvarchar(50)
+)
+create table chucvu(
+ma varchar(10) primary key not null,
+ten nvarchar(50)
+)
+create table thongtinhopdonglaodong(
+ma varchar(10) primary key not null,
+ten nvarchar(100),
+kyhan date
+)
+create table hephongban(
+ma varchar(10) primary key not null,
+ten nvarchar(50))
+create table phongban(
+ma varchar(10) primary key not null,
+ten nvarchar(50),
+mathue int,
+dienthoai varchar(12),
+diachi nvarchar(100),
+fax nvarchar(50),
+email varchar(50) ,
+hephongbanma varchar(10) REFERENCES hephongban(ma)
+
+
+)
+
+create table nhanvien(
+ma varchar(10) primary key not null,
+ten nvarchar(50) ,
+ngaysinh date,
+gioitinh bit,
+trangthaihonnnhan bit,
+cmtnd varchar(20),
+ngaycap date,
+noicap nvarchar(100),
+masothue varchar(20),
+ngaybatdaulamviec date,
+anh nvarchar(200),
+nguoidungID int REFERENCES nguoidung(ID),
+hocvanma varchar(10) REFERENCES hocvan(ma),
+
+)
+
+
+ create table thongtinnhanvien(
+ma varchar(10) primary key not null,
+noisinh  nvarchar(150),
+nguyenquan nvarchar(150),
+hokhauthuongtru nvarchar(150),
+tamtru nvarchar(150),
+dantoc nvarchar(50),
+tongiao nvarchar(50),
+quoctich nvarchar(50),
+hoancanhgiadinh text,
+hoancanhbanthan text,
+nhanvienma varchar(10) REFERENCES nhanvien(ma)
+)
+alter table  thongtinnhanvien add phongbanma varchar(10) REFERENCES phongban(ma);
+alter table  thongtinnhanvien add nhomnma varchar(10) REFERENCES nhom(ma);
+
+
+
+
+create table thongtinkhacvenhanvien(
+solaodong int,
+sobhxn int,
+ngaycapbhxh date,
+noicapbhxh nvarchar(150),
+sobhyt int,
+ngaycapbhyt date,
+noicapbhyt nvarchar(150),
+hochieu nvarchar(200),
+taikhoannganhang varchar(20),
+manganhang varchar(10),
+thongtinnhanvienma varchar(10) REFERENCES thongtinnhanvien(ma),
+nhanvienma varchar(10) REFERENCES nhanvien(ma)
+)
+create table hopdonglaodongnhanvien(
+ma varchar(10) primary key not null,
+ngayky date,
+ngaybatdau date,
+ngayketthuc date,
+luongthuviec money ,
+thongtinhopdonglaodongma varchar(10) REFERENCES thongtinhopdonglaodong(ma),
+nhanvienma varchar(10) REFERENCES nhanvien(ma)
+)
+
+create table thongtinhoso(
+ma varchar(10) primary key not null,
+ten nvarchar(50) ,
+vitriluutru nvarchar(50),
+nhanvienma varchar(10) REFERENCES nhanvien(ma)
+)
+
+--alter table thongtinhoso add ten nvarchar(50) ,
+--vitriluutru nvarchar(50),
+--nhanvienma varchar(10) REFERENCES nhanvien(ma)
+create table luongcoban(
+ma varchar(10) primary key not null ,
+heso float,
+ten nvarchar(50),
+hocvanma varchar(10) REFERENCES hocvan(ma),
+giatri money
+)
+--alter table luongcoban  add giatri money
+create table phucap(
+chucvuma varchar(10)REFERENCES chucvu(ma),
+ma varchar(10) primary key not null,
+heso nvarchar(50)
+)
+create table luongnhanvien(
+nhanvienma varchar(10) REFERENCES nhanvien(ma),
+luongcobanma varchar(10) REFERENCES luongcoban(ma),
+phucapma varchar(10) REFERENCES phucap(ma),
+
+)
